@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 - 网络入侵检测与防御系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fa fa-shield"></i> 网络入侵检测与防御系统
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">主页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">仪表盘</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logs">日志</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/settings">设置</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">设置菜单</h5>
+                    </div>
+                    <div class="list-group list-group-flush" id="settingsTab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="general-tab" data-bs-toggle="list" href="#general" role="tab">
+                            <i class="fa fa-cog fa-fw me-2"></i> 常规设置
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="detection-tab" data-bs-toggle="list" href="#detection" role="tab">
+                            <i class="fa fa-search fa-fw me-2"></i> 检测设置
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="prevention-tab" data-bs-toggle="list" href="#prevention" role="tab">
+                            <i class="fa fa-shield fa-fw me-2"></i> 防御设置
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="alert-tab" data-bs-toggle="list" href="#alert" role="tab">
+                            <i class="fa fa-bell fa-fw me-2"></i> 告警设置
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="network-tab" data-bs-toggle="list" href="#network" role="tab">
+                            <i class="fa fa-sitemap fa-fw me-2"></i> 网络设置
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="backup-tab" data-bs-toggle="list" href="#backup" role="tab">
+                            <i class="fa fa-database fa-fw me-2"></i> 备份与恢复
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="about-tab" data-bs-toggle="list" href="#about" role="tab">
+                            <i class="fa fa-info-circle fa-fw me-2"></i> 关于系统
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- 常规设置 -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">常规设置</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="generalSettingsForm">
+                                    <div class="mb-3">
+                                        <label for="systemName" class="form-label">系统名称</label>
+                                        <input type="text" class="form-control" id="systemName" name="systemName" value="网络入侵检测与防御系统">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="networkInterface" class="form-label">网络接口</label>
+                                        <select class="form-select" id="networkInterface" name="networkInterface">
+                                            <option value="all">所有接口</option>
+                                            <option value="eth0">eth0</option>
+                                            <option value="wlan0">wlan0</option>
+                                        </select>
+                                        <div class="form-text">选择要监控的网络接口</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="logRetention" class="form-label">日志保留时间（天）</label>
+                                        <input type="number" class="form-control" id="logRetention" name="logRetention" value="30" min="1" max="365">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="autoStart" name="autoStart" checked>
+                                            <label class="form-check-label" for="autoStart">系统启动时自动运行</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="darkMode" name="darkMode">
+                                            <label class="form-check-label" for="darkMode">深色模式</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">保存设置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 检测设置 -->
+                    <div class="tab-pane fade" id="detection" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">检测设置</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="detectionSettingsForm">
+                                    <div class="mb-3">
+                                        <label for="detectionMode" class="form-label">检测模式</label>
+                                        <select class="form-select" id="detectionMode" name="detectionMode">
+                                            <option value="passive">被动模式（仅监控不干预）</option>
+                                            <option value="active" selected>主动模式（监控并干预）</option>
+                                            <option value="learning">学习模式（建立行为基线）</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="packetSampleRate" class="form-label">数据包采样率（%）</label>
+                                        <input type="range" class="form-range" id="packetSampleRate" name="packetSampleRate" min="10" max="100" value="100">
+                                        <div class="text-end"><span id="packetSampleRateValue">100%</span></div>
+                                        <div class="form-text">较低的采样率可以减少系统负载，但可能会错过一些威胁</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="deepPacketInspection" name="deepPacketInspection" checked>
+                                            <label class="form-check-label" for="deepPacketInspection">深度数据包检测</label>
+                                        </div>
+                                        <div class="form-text">分析数据包内容以检测攻击特征（需要更多系统资源）</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="anomalyDetection" name="anomalyDetection" checked>
+                                            <label class="form-check-label" for="anomalyDetection">异常行为检测</label>
+                                        </div>
+                                        <div class="form-text">使用统计和行为分析检测异常流量</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">威胁检测类型</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="detectSqlInjection" name="detectSqlInjection" checked>
+                                                    <label class="form-check-label" for="detectSqlInjection">SQL注入攻击</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="detectXss" name="detectXss" checked>
+                                                    <label class="form-check-label" for="detectXss">跨站脚本(XSS)</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="detectDos" name="detectDos" checked>
+                                                    <label class="form-check-label" for="detectDos">拒绝服务(DoS)</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="detectPortScan" name="detectPortScan" checked>
+                                                    <label class="form-check-label" for="detectPortScan">端口扫描</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">保存设置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 防御设置 -->
+                    <div class="tab-pane fade" id="prevention" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">防御设置</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="preventionSettingsForm">
+                                    <div class="mb-3">
+                                        <label for="preventionMode" class="form-label">防御模式</label>
+                                        <select class="form-select" id="preventionMode" name="preventionMode">
+                                            <option value="monitor">监控模式（只记录不阻止）</option>
+                                            <option value="auto" selected>自动模式（根据规则自动阻止）</option>
+                                            <option value="strict">严格模式（更主动地阻止可疑活动）</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="ipBlockDuration" class="form-label">IP阻止持续时间（分钟）</label>
+                                        <input type="number" class="form-control" id="ipBlockDuration" name="ipBlockDuration" value="60" min="5" max="1440">
+                                        <div class="form-text">设置为0表示永久阻止，直到手动解除</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="blockThreshold" class="form-label">阻止阈值（告警次数）</label>
+                                        <input type="number" class="form-control" id="blockThreshold" name="blockThreshold" value="3" min="1" max="100">
+                                        <div class="form-text">源IP产生多少次告警后自动阻止</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">可疑流量操作</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="trafficAction" id="actionBlock" value="block" checked>
+                                                    <label class="form-check-label" for="actionBlock">
+                                                        阻止流量
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="trafficAction" id="actionReset" value="reset">
+                                                    <label class="form-check-label" for="actionReset">
+                                                        重置连接
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="trafficAction" id="actionLog" value="log">
+                                                    <label class="form-check-label" for="actionLog">
+                                                        仅记录
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">保存设置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 告警设置 -->
+                    <div class="tab-pane fade" id="alert" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">告警设置</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="alertSettingsForm">
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="webNotifications" name="webNotifications" checked>
+                                            <label class="form-check-label" for="webNotifications">Web界面通知</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="emailAlerts" name="emailAlerts">
+                                            <label class="form-check-label" for="emailAlerts">电子邮件通知</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="emailRecipients" class="form-label">邮件接收者</label>
+                                        <input type="text" class="form-control" id="emailRecipients" name="emailRecipients" placeholder="多个地址用逗号分隔">
+                                        <div class="form-text">例如: admin@example.com, security@example.com</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="minAlertSeverity" class="form-label">最低告警级别</label>
+                                        <select class="form-select" id="minAlertSeverity" name="minAlertSeverity">
+                                            <option value="high">高（仅严重威胁）</option>
+                                            <option value="medium" selected>中（中等及以上威胁）</option>
+                                            <option value="low">低（所有威胁）</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">保存设置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 网络设置 -->
+                    <div class="tab-pane fade" id="network" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">网络设置</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="networkSettingsForm">
+                                    <div class="mb-3">
+                                        <label for="managementPort" class="form-label">管理界面端口</label>
+                                        <input type="number" class="form-control" id="managementPort" name="managementPort" value="5000" min="1" max="65535">
+                                        <div class="form-text">修改此设置后需要重启系统</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="monitoredNetworks" class="form-label">监控网络</label>
+                                        <textarea class="form-control" id="monitoredNetworks" name="monitoredNetworks" rows="3" placeholder="每行一个CIDR格式的网络">192.168.1.0/24
+10.0.0.0/8</textarea>
+                                        <div class="form-text">指定要监控的网络范围，CIDR格式（如 192.168.1.0/24）</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="enableSsl" name="enableSsl">
+                                            <label class="form-check-label" for="enableSsl">启用SSL/TLS</label>
+                                        </div>
+                                        <div class="form-text">为管理界面启用HTTPS</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="requireAuth" name="requireAuth" checked>
+                                            <label class="form-check-label" for="requireAuth">要求身份验证</label>
+                                        </div>
+                                        <div class="form-text">用户访问系统时需要登录</div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">保存设置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 备份与恢复 -->
+                    <div class="tab-pane fade" id="backup" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">备份与恢复</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h6>创建备份</h6>
+                                    <p>创建系统配置和数据的完整备份</p>
+                                    <button type="button" class="btn btn-primary" id="createBackupBtn">创建备份</button>
+                                    <div class="progress mt-2 d-none" id="backupProgress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="mb-4">
+                                    <h6>恢复备份</h6>
+                                    <p>从备份文件恢复系统</p>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="backupFile" accept=".zip,.json">
+                                        <button class="btn btn-outline-secondary" type="button" id="restoreBackupBtn">恢复</button>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div>
+                                    <h6>重置系统</h6>
+                                    <p>将系统恢复到初始状态（此操作不可撤销）</p>
+                                    <button type="button" class="btn btn-danger" id="resetSystemBtn">重置系统</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 关于系统 -->
+                    <div class="tab-pane fade" id="about" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">关于系统</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-4">
+                                    <i class="fa fa-shield fa-4x text-primary mb-3"></i>
+                                    <h3>网络入侵检测与防御系统</h3>
+                                    <p class="text-muted">版本 Peng_Test</p>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>系统信息</h6>
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th>安装日期:</th>
+                                                <td>2025-4</td>
+                                            </tr>
+                                            <tr>
+                                                <th>最后更新:</th>
+                                                <td>2025-4</td>
+                                            </tr>
+                                            <tr>
+                                                <th>系统平台:</th>
+                                                <td>Ubuntu 22.04 LTS</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Python版本:</th>
+                                                <td>3.9.5</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>核心组件状态</h6>
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th>检测引擎:</th>
+                                                <td><span class="badge bg-success">正常</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>防御模块:</th>
+                                                <td><span class="badge bg-success">正常</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>告警系统:</th>
+                                                <td><span class="badge bg-success">正常</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>数据库:</th>
+                                                <td><span class="badge bg-success">正常</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-outline-primary btn-sm">检查更新</a>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm">系统文档</a>
+                                    <a href="#" class="btn btn-outline-info btn-sm">技术支持</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-dark text-white">
+        <div class="container text-center">
+            <p>&copy; 2025 网络入侵检测与防御系统 | 版本 Peng_Test</p>
+        </div>
+    </footer>
+
+    <!-- 确认模态框 -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">确认操作</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="confirmMessage">
+                    <!-- 消息将通过JavaScript插入 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmActionBtn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.4.0/dist/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+</body>
+</html>

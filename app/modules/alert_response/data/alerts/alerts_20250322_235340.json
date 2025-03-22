@@ -1,0 +1,38 @@
+[
+  {
+    "alert_id": "ALERT-1742658790-3266",
+    "timestamp": "2025-03-22T23:53:10.887315",
+    "alert_type": "SQL\u6ce8\u5165\u653b\u51fb",
+    "severity": "\u4f4e",
+    "src_ip": "192.168.1.175",
+    "dst_ip": "10.0.0.245",
+    "port": 61548,
+    "protocol": "HTTP",
+    "details": "\u68c0\u6d4b\u5230SQL\u6ce8\u5165\u653b\u51fb\u653b\u51fb\u5c1d\u8bd5",
+    "action_taken": "\u5df2\u963b\u6b62"
+  },
+  {
+    "alert_id": "ALERT-1742658800-1167",
+    "timestamp": "2025-03-22T23:53:20.906087",
+    "alert_type": "SQL\u6ce8\u5165\u653b\u51fb",
+    "severity": "\u9ad8",
+    "src_ip": "192.168.1.152",
+    "dst_ip": "10.0.0.115",
+    "port": 60898,
+    "protocol": "HTTP",
+    "details": "\u68c0\u6d4b\u5230SQL\u6ce8\u5165\u653b\u51fb\u653b\u51fb\u5c1d\u8bd5",
+    "action_taken": "\u5df2\u8bb0\u5f55"
+  },
+  {
+    "alert_id": "ALERT-1742658815-3189",
+    "timestamp": "2025-03-22T23:53:35.916368",
+    "alert_type": "\u7aef\u53e3\u626b\u63cf",
+    "severity": "\u9ad8",
+    "src_ip": "192.168.1.209",
+    "dst_ip": "10.0.0.228",
+    "port": 36362,
+    "protocol": "TCP",
+    "details": "\u68c0\u6d4b\u5230\u7aef\u53e3\u626b\u63cf\u653b\u51fb\u5c1d\u8bd5",
+    "action_taken": "\u5df2\u963b\u6b62"
+  }
+]

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表盘 - 网络入侵检测与防御系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fa fa-shield"></i> 网络入侵检测与防御系统
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">主页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/dashboard">仪表盘</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logs">日志</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings">设置</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle"></i> 仪表盘数据每秒自动更新。系统状态：<span id="systemStatusBadge" class="badge bg-danger">未运行</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-primary">
+                                <i class="fa fa-exchange"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted">网络流量</h6>
+                                <h4 id="trafficStat">0 KB/s</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-success">
+                                <i class="fa fa-server"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted">活跃连接</h6>
+                                <h4 id="connectionsStat">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-warning">
+                                <i class="fa fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted">检测到的威胁</h6>
+                                <h4 id="threatsStat">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-danger">
+                                <i class="fa fa-ban"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted">已阻止IP</h6>
+                                <h4 id="blockedIpsStat">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">网络流量统计</h5>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-outline-secondary traffic-time-btn active" data-time="10">10分钟</button>
+                            <button type="button" class="btn btn-outline-secondary traffic-time-btn" data-time="30">30分钟</button>
+                            <button type="button" class="btn btn-outline-secondary traffic-time-btn" data-time="60">1小时</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="trafficChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">协议分布</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="protocolChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">最近检测到的威胁</h5>
+                    </div>
+                    <div class="card-body threat-list-container">
+                        <div id="threatList" class="threat-list">
+                            <div class="text-center text-muted">
+                                <i class="fa fa-spin fa-spinner"></i> 加载威胁数据...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">攻击类型统计</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="attackTypeChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">活跃IP</h5>
+                        <input type="text" id="ipSearchInput" class="form-control form-control-sm w-25" placeholder="搜索IP">
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="ipTable">
+                                <thead>
+                                    <tr>
+                                        <th>IP地址</th>
+                                        <th>入站流量</th>
+                                        <th>出站流量</th>
+                                        <th>威胁次数</th>
+                                        <th>最后活动时间</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">
+                                            <i class="fa fa-spin fa-spinner"></i> 加载IP数据...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-dark text-white">
+        <div class="container text-center">
+            <p>&copy; 2025 网络入侵检测与防御系统 | 版本 Peng_Test</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.4.0/dist/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

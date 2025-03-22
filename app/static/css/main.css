@@ -1,0 +1,237 @@
+/* 主样式文件 */
+
+/* 全局样式 */
+body {
+    background-color: #f5f5f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+}
+
+/* 首页英雄区 */
+.hero-section {
+    background: linear-gradient(135deg, #3a8eba 0%, #1c4b91 100%);
+    color: white;
+    padding: 80px 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 状态卡片 */
+.status-card {
+    text-align: center;
+    padding: 10px;
+}
+
+.status-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.status-value.active {
+    color: #28a745;
+}
+
+.status-value.inactive {
+    color: #dc3545;
+}
+
+.status-value i {
+    font-size: 14px;
+}
+
+/* 仪表盘卡片 */
+.dashboard-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.bg-primary {
+    background-color: #3a86ff !important;
+}
+
+.bg-success {
+    background-color: #38b000 !important;
+}
+
+.bg-warning {
+    background-color: #ffaa00 !important;
+}
+
+.bg-danger {
+    background-color: #d90429 !important;
+}
+
+.bg-info {
+    background-color: #00b4d8 !important;
+}
+
+/* 威胁列表 */
+.threat-list-container {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.threat-list .threat-item {
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.threat-list .threat-item:last-child {
+    border-bottom: none;
+}
+
+.threat-severity {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.severity-high {
+    background-color: #d90429;
+}
+
+.severity-medium {
+    background-color: #ffaa00;
+}
+
+.severity-low {
+    background-color: #38b000;
+}
+
+/* 系统事件 */
+.system-events {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.event-item {
+    display: flex;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.event-time {
+    width: 80px;
+    color: #666;
+}
+
+.event-type {
+    width: 80px;
+    padding: 0 8px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.event-type.info {
+    background-color: #e3f2fd;
+    color: #0d6efd;
+}
+
+.event-type.success {
+    background-color: #d4edda;
+    color: #198754;
+}
+
+.event-type.warning {
+    background-color: #fff3cd;
+    color: #ffc107;
+}
+
+.event-type.error {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.event-type.alert {
+    background-color: #cff4fc;
+    color: #0dcaf0;
+}
+
+.event-message {
+    flex: 1;
+}
+
+/* 日志详情 */
+.log-detail-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* 设置页面 */
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 40px 0;
+    }
+    
+    .status-value {
+        font-size: 18px;
+    }
+    
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+/* 表格内容垂直居中 */
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* 按钮组样式 */
+.btn-group-sm>.btn, .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "alert_id": "ALERT-1742658735-5055",
+    "timestamp": "2025-03-22T23:52:15.881707",
+    "alert_type": "\u66b4\u529b\u7834\u89e3",
+    "severity": "\u4f4e",
+    "src_ip": "192.168.1.187",
+    "dst_ip": "10.0.0.38",
+    "port": 9425,
+    "protocol": "UDP",
+    "details": "\u68c0\u6d4b\u5230\u66b4\u529b\u7834\u89e3\u653b\u51fb\u5c1d\u8bd5",
+    "action_taken": "\u5df2\u8bb0\u5f55"
+  }
+]
