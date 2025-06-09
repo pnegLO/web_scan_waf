@@ -115,7 +115,7 @@ docker-compose -f docker/docker-compose.yml up -d
 
 如有任何问题或建议，请通过以下方式联系我：
 
-- 电子邮件：your.email@example.com
+- 电子邮件：pj206323@gmail.com
 - 项目Issues：[GitHub Issues](https://github.com/yourusername/intrusion_detection_system/issues)
 
 ---
